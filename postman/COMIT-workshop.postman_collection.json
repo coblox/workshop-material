@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "e437a8aa-6555-40af-ae99-fe44abc954ec",
+		"name": "COMIT-workshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bitcoind-TX-by-hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{bitcoind_port}}/rest/tx/918c49cbae78be13e0ae9aeb58311432a19620bd373f45fbcef97845e812e3ce.json",
+					"host": [
+						"localhost"
+					],
+					"port": "{{bitcoind_port}}",
+					"path": [
+						"rest",
+						"tx",
+						"918c49cbae78be13e0ae9aeb58311432a19620bd373f45fbcef97845e812e3ce.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parity-TX-by-hash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ffe184d-603e-41e5-8a94-223d07d754e8",
+						"exec": [
+							"var json = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"eth_account\", (json.result.from).substring(2));",
+							"if (json.result.creates !== undefined) {",
+							"    postman.setEnvironmentVariable(\"eth_htlc\", (json.result.creates).substring(2));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"jsonrpc\":\"2.0\", \"method\":\"eth_getTransactionByHash\", \"params\":[\"0x7d75136672178fb0b22e49c8ba34ef009e52f0e62bb89fd27355fff79e5827d0\"], \"id\":1}"
+				},
+				"url": {
+					"raw": "localhost:{{parity_port}}",
+					"host": [
+						"localhost"
+					],
+					"port": "{{parity_port}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parity-account-balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"jsonrpc\":\"2.0\", \"method\":\"eth_getBalance\", \"params\":[\"0xae3f86103D9014B4263D06E8DaDa84c767c9Cb1f\",\"latest\"], \"id\":1}"
+				},
+				"url": {
+					"raw": "localhost:{{parity_port}}",
+					"host": [
+						"localhost"
+					],
+					"port": "{{parity_port}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parity-erc20-balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_account}}\"}, \"latest\"], \"id\": 67}"
+				},
+				"url": {
+					"raw": "localhost:{{parity_port}}",
+					"host": [
+						"localhost"
+					],
+					"port": "{{parity_port}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parity-erc20-balance-htlc",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_htlc}}\"}, \"latest\"], \"id\": 67}"
+				},
+				"url": {
+					"raw": "localhost:{{parity_port}}",
+					"host": [
+						"localhost"
+					],
+					"port": "{{parity_port}}"
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
