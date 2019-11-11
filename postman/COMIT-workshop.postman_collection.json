@@ -77,7 +77,31 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"jsonrpc\":\"2.0\", \"method\":\"eth_getBalance\", \"params\":[\"0xae3f86103D9014B4263D06E8DaDa84c767c9Cb1f\",\"latest\"], \"id\":1}"
+					"raw": "{\"jsonrpc\":\"2.0\", \"method\":\"eth_getBalance\", \"params\":[\"0x{{eth_account}}\",\"latest\"], \"id\":1}"
+				},
+				"url": {
+					"raw": "localhost:{{parity_port}}",
+					"host": [
+						"localhost"
+					],
+					"port": "{{parity_port}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parity-account-balance-htlc",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"jsonrpc\":\"2.0\", \"method\":\"eth_getBalance\", \"params\":[\"0x{{eth_htlc}}\",\"latest\"], \"id\":1}"
 				},
 				"url": {
 					"raw": "localhost:{{parity_port}}",
@@ -101,7 +125,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_account}}\"}, \"latest\"], \"id\": 67}"
+					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_account}}\"}, \"latest\"], \"id\": 1}"
 				},
 				"url": {
 					"raw": "localhost:{{parity_port}}",
@@ -125,7 +149,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_htlc}}\"}, \"latest\"], \"id\": 67}"
+					"raw": "{ \"jsonrpc\": \"2.0\", \"method\": \"eth_call\", \"params\": [{\"to\": \"{{erc20_contract_adr}}\", \"data\": \"0x70a08231000000000000000000000000{{eth_htlc}}\"}, \"latest\"], \"id\": 1}"
 				},
 				"url": {
 					"raw": "localhost:{{parity_port}}",
